@@ -1,11 +1,9 @@
-# [Project Title]
-> *One sentence. What did you analyze, build, or solve - and why does it matter?*
+# FeeView - Lagos School Fees
+**An offline, one-page phone app that helps small low-fee private schools in Lagos track who has paid, who owes, and when to send reminders, so fee conversations with parents are clear instead of arguments.**
 
 ---
 
 ## ⚙️ Project Type Flags
-> *Check what applies. This helps reviewers and collaborators understand the nature of the work at a glance. Delete this block before publishing.*
-
 - [ ] Exploratory Data Analysis (EDA)
 - [ ] SQL Analysis / Querying
 - [ ] Dashboard / Data Visualization
@@ -13,7 +11,7 @@
 - [ ] Predictive Modelling / Machine Learning
 - [ ] Data Cleaning / Wrangling
 - [ ] End-to-End (multiple of the above)
-- [ ] Other: ___________
+- [ ] Other: Problem discovery + AI-assisted web app prototype (Meta AI Academy capstone)
 
 ---
 
@@ -22,10 +20,10 @@
 2. [Objectives](#2-objectives)
 3. [Project Scope & Tools](#3-project-scope--tools)
 4. [Repository Structure](#4-repository-structure)
-5. [Data Workflow](#5-data-workflow)
-6. [Data Model & Schema](#6-data-model--schema)
-7. [ERD - Entity Relationship Diagram](#7-erd--entity-relationship-diagram) *(SQL projects)*
-8. [Analysis & Metrics](#8-analysis--metrics)
+5. [Project Workflow](#5-project-data-workflow)
+6. [Data Model](#6-project-model)
+7. [Features](#7-features)
+8. [Testing & Metrics](#8-testing--metrics)
 9. [Key Insights](#9-key-insights)
 10. [Recommendations](#10-recommendations)
 11. [Assumptions & Limitations](#11-assumptions--limitations)
@@ -37,59 +35,24 @@
 
 ## 1. Project Overview
 
-<!--
-  Write 3–5 sentences in plain language.
-  Cover: context → problem → approach → outcome.
-  Read it out loud. If it sounds like a form - rewrite it.
+**Context:** Small low-fee private schools (50-150 pupils) in Oshodi, Lagos, live with unpredictable cash flow. Fees are tracked in ruled notebooks with no receipts, no debt history and no reminders. When a parent says "I paid last term", the owner has no proof.
 
-  WHAT GOOD LOOKS LIKE:
-  "A mid-size retail business was seeing inconsistent revenue across
-  its regional stores but couldn't identify the root cause. This project
-  explored 18 months of transaction data across five regions to determine
-  whether underperformance was driven by sales volume, pricing, or return
-  rates. The analysis revealed that one region's gap was almost entirely
-  explained by an unusually high return rate on a single product category -
-  a finding invisible in the company's top-level reporting."
+**Problem Statement:** Small private school owners in Oshodi struggle to track fee payments and recover debts because records live in notebooks, and existing school apps cost too much and need constant internet and a laptop.
 
-  WHAT TO AVOID:
-  "This project analyzes sales data to find trends and insights."
-  (Too vague. Could describe 10,000 projects. Describes none of them.)
--->
+**Approach:** I used the Meta AI Academy method: research the problem first, then build the smallest working prototype, then test it with real users. The prototype was built with AI tools and tested with school staff over WhatsApp.
 
-**Context:** [The business, research, or personal situation that motivated this project.]
-
-**Problem Statement:** [The specific question or challenge you were addressing.]
-
-**Approach:** [In 1–2 sentences - how did you tackle it?]
-
-**Outcome:** [What did you produce or discover?]
+**Outcome:** FeeView, a mobile-friendly tracker that works with no login, no backend and no internet. It shows each pupil's total fee, amount paid and balance, records payments, produces a shareable receipt, and prepares WhatsApp deadline reminders for parents.
 
 ---
 
 ## 2. Objectives
 
-<!--
-  Write objectives that are specific enough to succeed or fail.
-  Use action-oriented verbs: Identify, Determine, Quantify, Build, Evaluate.
+- **Primary Objective:** Give small schools a free, simple way to know who owes what, and prove what has been paid.
+- **Secondary Objective 1:** Make recording a payment fast (about 10 seconds).
+- **Secondary Objective 2:** Give parents a clear receipt they can screenshot, share on WhatsApp or print.
+- **Secondary Objective 3:** Help staff remind parents politely as fee deadlines approach.
 
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Determine whether customer churn rate correlates with support ticket volume."
-  ✅ "Identify the top three revenue-driving product categories across all regions."
-  ✅ "Build a reproducible pipeline that ingests and cleans daily sales exports."
-
-  WHAT TO AVOID:
-  ❌ "Explore the data."
-  ❌ "Gain insights."
-  ❌ "Understand trends."
-  (These can't fail - which means they can't succeed either.)
--->
-
-- **Primary Objective:** [The main thing you set out to do]
-- **Secondary Objective 1:** [Supporting goal]
-- **Secondary Objective 2:** [Supporting goal]
-- **Secondary Objective 3:** [Remove if not applicable]
-
-> 💡 *Every analysis decision in this project traces back to one of these objectives.*
+💡 Every feature in this project traces back to one of these objectives.
 
 ---
 
@@ -97,422 +60,199 @@
 
 ### Scope
 
-<!--
-  WHAT GOOD LOOKS LIKE:
-  In Scope: "Transaction-level data for Regions A–E, Jan 2023–Jun 2024.
-             Analysis covers revenue, return rates, and product category performance."
-  Out of Scope: "Customer demographics and marketing spend data were excluded -
-                 demographic data was incomplete for two regions, and marketing
-                 data sits in a separate system outside this engagement."
-
-  WHAT TO AVOID:
-  ❌ Leaving Out of Scope blank. This is the section that protects your credibility.
-     If you don't define the fence, reviewers assume you missed things.
--->
-
 | Dimension | Details |
 |-----------|---------|
-| **In Scope** | [What is included - data sources, time periods, segments] |
-| **Out of Scope** | [What you explicitly excluded - and a brief reason why] |
-| **Time Period** | [Date range of the data or the project itself] |
-| **Granularity** | [Unit of analysis - row-level, daily aggregates, per-user, etc.] |
+| **In Scope** | Pupil fee records, payment history, balances, status labels, receipts, term-week tracking, deadline reminder messages |
+| **Out of Scope** | Official accounting, tax filing, money transfers, bank integration, user roles, cloud backup (see Limitations) |
+| **Time Period** | One school term (Weeks 1-13) |
+| **Granularity** | Per pupil, with payment-level history |
 
-### Tools & Technologies
-
-<!--
-  List only what you actually used on this project.
-  This is not your skills section - it's the project's technical context.
--->
+### Tools & Technologies 
 
 | Category | Tool(s) Used |
 |----------|-------------|
-| Data Storage | [e.g., PostgreSQL, CSV files, BigQuery, S3] |
-| Data Processing | [e.g., Python, R, SQL, Excel, dbt] |
-| Analysis | [e.g., pandas, dplyr, custom SQL queries] |
-| Visualization | [e.g., Matplotlib, Tableau, Power BI, Looker] |
-| Version Control | [e.g., Git / GitHub] |
-| Documentation | [e.g., Markdown, Notion] |
-| Other | [Any additional tools] |
+| Data Storage | Browser LocalStorage (on the phone only) |
+| Bulid | AI app builder (Manus) - confirm before publishing |
+| Research & Planning | Meta AI |
+| Front end | One-page responsive web app, optimized for 375px Android screens |
+| Messaging | WhatsApp click-to-chat links |
+| Version Control | Git / GitHub |
+| Documentation | Markdown |
 
 ---
 
 ## 4. Repository Structure
 
 ```
-[project-root]/
+[FeeView/
 │
-├── data/
-│   ├── raw/                  # Original, unmodified source data - never edited
-│   ├── processed/            # Cleaned and transformed data
-│   └── external/             # Reference data, lookup tables, third-party files
-│
-├── notebooks/                # Jupyter, R Markdown, or Colab notebooks
-│
-├── scripts/                  # Reusable .py, .R, or .sh processing files
-│
-├── queries/                  # SQL files (retain this folder for SQL-heavy projects)
-│   ├── exploratory/          # Ad-hoc or investigative queries
-│   ├── transformations/      # Cleaning and reshaping logic
-│   └── final/                # Production-ready or presentation queries
-│
-├── reports/                  # Final outputs: PDFs, slide decks, Word docs
-│
-├── visuals/                  # Exported charts, dashboard screenshots, ERD diagrams
-│
-├── docs/                     # Data dictionaries, schema notes, reference material
-│
-├── project_metadata.yml      # Machine-readable metadata (optional)
-└── README.md                 # You are here
+├── app/                # Prototype source / build output
+├── docs/
+│   └── Meta AI Development Capstone Project.docx   # Problem, prototype and reflection
+├── visuals/            # Screenshots of the app (375px mobile view)
+└── README.md           # You are here
 ```
-
-> ⚠️ *Delete folders you didn't use. An empty folder is worse than no folder.*
-> SQL-heavy projects: keep `queries/`. Analysis-only projects: keep `notebooks/`. Both? Keep both.
-
 ---
 
-## 5. Data Workflow
 
-<!--
-  Show how data moved through your project - from source to output.
-  Every transformation decision should be traceable here.
-
-  WHAT GOOD LOOKS LIKE:
-  1. Source: "Monthly CSV exports pulled from the internal POS system.
-              Five files, one per region, covering Jan 2023–Jun 2024."
-  2. Ingestion: "Loaded into Python using pandas. Files concatenated into
-                 a single dataframe (approx. 340,000 rows)."
-  3. Cleaning: "Removed 1.2% of rows with null transaction IDs.
-                Standardised date formats across regional files.
-                Resolved product category naming inconsistencies (3 variants → 1)."
-  4. Transformation: "Created a returns_rate field at product-category level.
-                      Aggregated to weekly and regional grain for trend analysis."
-  5. Analysis: "Descriptive statistics, regional comparison, return rate
-                segmentation by product category."
-  6. Output: "Summary report (PDF), annotated notebook, processed CSV."
-
-  WHAT TO AVOID:
-  ❌ "Data was cleaned and analysed." (No chain. No decisions. No trust.)
--->
+## 5. Project Workflow
 
 ```
-[Data Source(s)]
-      ↓
-[Ingestion / Collection Method]
-      ↓
-[Cleaning & Transformation]
-      ↓
-[Analysis / Modelling / Querying]
-      ↓
-[Output / Visualisation / Reporting]
+[Problem Discovery: interviews & research in Oshodi]
+                    ↓
+[Problem Statement & Value Proposition]
+                    ↓
+[Prototype Plan (3-4 features) → Build]
+                    ↓
+[Test with 3 school staff via WhatsApp]
+                    ↓
+[Version 2: term start date & deadline reminders]
+
 ```
 
-1. **Source:** [Where did the data come from? Format, size, access method.]
-2. **Ingestion:** [How was it brought in?]
-3. **Cleaning:** [What issues did you find and fix?]
-4. **Transformation:** [What new fields, aggregations, or structures did you create?]
-5. **Analysis:** [What methods - statistical, visual, query-based, model-based?]
-6. **Output:** [What form do the results take?]
+1. **Problem Discovery:** Mapped existing school apps (15+ in Nigeria at about N40k-N120k monthly) and why they fail small schools.
+   
+2. **Plan:** Kept the prototype to one main job and a few supporting features.
+
+3. **Build:** One-page, mobile-first, offline app with sample data marked clearly.
+
+4. **Test:** Three school staff tried it without training.
+
+5. **Iterate:** Added term-week tracking and deadline reminders.
 
 ---
 
-## 6. Data Model & Schema
+## 6. Data Model 
+All data is stored locally in the browser. No real pupil data is included in this repository; the prototype ships with 5 sample pupils.
 
-<!--
-  Define your fields so that someone reading your analysis can follow along
-  without digging through your code.
+### Table: `Record: Pupil`
 
-  WHAT GOOD LOOKS LIKE (one row example):
-  | transaction_id | string | Unique identifier per sales transaction | TXN-00482 |
-  | return_flag    | boolean | Whether the transaction included a return | TRUE |
-  | region_code    | string | Two-letter identifier for store region | "NE" |
+| Field Name | Description | Example Value |
+|------------|-------------|---------------|
+| `Pupil name` | Name of the pupil | [Non-sensitive example] |
+| `Class`  | Class the pupil is in | Primary  |
+| `Parent name`  | Used in reminder messages | [Non-sensitive example] |
+| `Total fee` | Fee for the term (₦) | ₦110,000 |
+| `Paid` | Sum of payments (₦) |   ₦30,000  |
+| `Balance` | Total fee minus paid (₦)| ₦50,000 |
+| `Status` | Paid / Owing / Partial (green / red / yellow) | Partial |
 
-  WHAT TO AVOID:
-  ❌ Skipping this section because "the field names are self-explanatory."
-     They're not. Not to a reviewer. Not to you in six months.
+###Record: Payment
 
-  📌 FOR SQL PROJECTS: If you have multiple tables, create one block per table.
-     Describe join keys and relationships here. Your ERD (Section 7) will
-     visualise what this section describes in text.
+| Field | Description |
+|-------|-------------|
+| `Amount` | Amount paid (₦) |
+| `Date` | Auto-filled, editable |
 
-  📌 FOR NON-SQL PROJECTS: Describe the shape of your dataset informally
-     if a formal schema doesn't apply. Even one paragraph is more helpful than nothing.
--->
+### Settings
 
-### Dataset / Table: `[name]`
-
-| Field Name | Data Type | Description | Example Value |
-|------------|-----------|-------------|---------------|
-| `[field_1]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_2]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-| `[field_3]` | [string / int / date / float / boolean] | [What this field represents] | [Non-sensitive example] |
-
-> **Row count (approx.):** [X rows]
-> **Date range:** [Start] – [End]
-> **Key join / relationship:** [e.g., `orders.customer_id` → `customers.id`]
-
-*Add additional table blocks as needed for multi-table projects.*
+| Field | Description |
+|-------| ------------|
+|`Term start date` | Set once; drives the current school week (1-13) |
 
 ---
 
-## 7. ERD - Entity Relationship Diagram
-### *(Primarily for SQL Projects - remove this section if not applicable)*
+## 7. Features
 
-<!--
-  An ERD shows how your tables connect to each other visually.
-  It is the fastest way for a reviewer to understand the data structure
-  of a SQL project without reading every query.
+### Version 1: Fee tracker
 
-  HOW TO INCLUDE YOUR ERD:
-  Option A - Image embed (most common):
-    Export your ERD from dbdiagram.io, DBeaver, Lucidchart, or similar.
-    Save to /visuals/erd.png and reference it below.
+- One-page responsive layout optimized for small Android phones
+- 5 sample pupils pre-loaded with naira balances and status dots
+- Search by pupil name or class
+- Payment history and an Add Payment popup with instant balance updates
+- Printable receipt, with a Share as Image fallback
+- LocalStorage only: no login, backend, payment processing or internet needed
 
-  Option B - dbdiagram.io code block (version-controllable):
-    Paste your schema definition code directly in the fenced block below.
-    Anyone can paste it into dbdiagram.io to regenerate the visual.
+### Version 2: Deadline reminders
+- One-time term start date setup
+- Current school week indicator (Week 1-13)
+- Yellow "Deadline approaching" label from Week 5
+- Red "Deadline reached" label from Week 7
+- Send deadline reminder" button that opens WhatsApp with the message ready
+- Parent name, pupil name, balance and school name filled in automatically
+- Safety note: reminders are not sent automatically; staff review and send each one
 
-  Option C - Mermaid diagram (renders natively in GitHub):
-    Use the mermaid code block syntax below.
-    GitHub will render this as a diagram automatically.
-
-  PICK ONE. Don't use all three. Delete the options you don't use.
--->
-
-### Option A - Embedded Image
-![ERD Diagram](visuals/erd.png)
-*[Brief caption: e.g., "Three-table schema - orders, customers, and products joined on shared IDs."]*
+Verification: production build, route check, and 375px mobile screenshots.
 
 ---
 
-### Option B - dbdiagram.io Schema Definition
-```
-Table orders {
-  order_id    int     [pk]
-  customer_id int     [ref: > customers.customer_id]
-  product_id  int     [ref: > products.product_id]
-  order_date  date
-  amount      float
-}
-
-Table customers {
-  customer_id int  [pk]
-  region_code string
-  signup_date date
-}
-
-Table products {
-  product_id   int    [pk]
-  category     string
-  unit_price   float
-}
-```
-*Paste this into [dbdiagram.io](https://dbdiagram.io) to view the visual.*
-
----
-
-### Option C - Mermaid Diagram *(renders on GitHub)*
-```mermaid
-erDiagram
-    ORDERS {
-        int order_id PK
-        int customer_id FK
-        int product_id FK
-        date order_date
-        float amount
-    }
-    CUSTOMERS {
-        int customer_id PK
-        string region_code
-        date signup_date
-    }
-    PRODUCTS {
-        int product_id PK
-        string category
-        float unit_price
-    }
-    ORDERS ||--o{ CUSTOMERS : "placed by"
-    ORDERS ||--o{ PRODUCTS : "contains"
-```
-
----
-
-**Table Relationships Summary:**
-
-| Relationship | Join Key | Type |
-|-------------|----------|------|
-| `orders` → `customers` | `customer_id` | Many-to-One |
-| `orders` → `products` | `product_id` | Many-to-One |
-| [Add rows as needed] | | |
-
----
-
-## 8. Analysis & Metrics
-
-<!--
-  Explain what you measured and how - before you share what you found.
-
-  WHAT GOOD LOOKS LIKE:
-  Metric: "Customer Return Rate"
-  Definition: "Number of transactions flagged as returns divided by total
-               transactions, calculated at product-category and regional grain."
-  Why It Matters: "Return rate - not sales volume - was hypothesised to
-                  explain regional revenue gaps. This metric tests that hypothesis."
-
-  WHAT TO AVOID:
-  ❌ Defining a metric only in code: SUM(returns) / COUNT(transaction_id)
-     That's an implementation. Write the plain-language definition here.
-     Both belong in your project - the definition in the README,
-     the implementation in the code.
--->
-
-### Analytical Approach
-
-[Describe how you approached the analysis. Were you exploring patterns? Testing a hypothesis? Building and validating a pipeline? Be honest about your method - exploratory work is valid, just call it that.]
-
+## 8. Testing & Metrics
 ### Key Metrics Defined
 
 | Metric | Plain-Language Definition | Why It Matters |
 |--------|--------------------------|----------------|
-| `[Metric 1]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 2]` | [What it measures, in one sentence] | [What decision or question it answers] |
-| `[Metric 3]` | [What it measures, in one sentence] | [What decision or question it answers] |
+|`Task completion` | Staff who finished search → add payment → show receipt unaided | Shows whether the app works without training |
+|`Time to record payment`| Time to save a payment | Target is about 10 seconds |
+|`Fees at risk`| Share of fees paid late or lost as bad debt | The size of the problem being solved |
+
+### Problem sizing (from Oshodi research)
+- For a 100-pupil school charging ₦110,000 per pupil:
+- Expected per term: 100 × ₦110,000 = ₦11,000,000
+- Paid late or lost (30-40%): ₦3.3M - ₦4.4M stuck every term
+- Plus 6-8 hours every weekend spent calling parents
+These figures come from my own interviews with school owners and are estimates, not audited numbers.
 
 ### Methods Used
-
-- [e.g., Descriptive statistics - distribution, central tendency, outlier detection]
-- [e.g., Trend analysis across [time period]]
-- [e.g., Segmentation / group comparison by [dimension]]
-- [e.g., Correlation analysis between [variable A] and [variable B]]
-- [e.g., SQL window functions for [specific aggregation]]
-- [e.g., Custom aggregation or transformation logic in [tool]]
+- Interviews with school owners in Oshodi
+- Mapping of existing solutions and their cost
+- Remote usability test over WhatsApp with 3 school staff
 
 ---
 
 ## 9. Key Insights
 
-<!--
-  Findings + implications. Not just what happened - what it means.
+**Insight 1: The barrier is cost and connectivity, not a lack of software** More than 15 school apps already exist, but small schools cannot afford them or rely on constant internet and a laptop.
 
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Return rates, not sales volume, explain Region A's underperformance.
-      Region A's return rate on home goods was 34% - more than double the
-      company average. Revenue was not lost at the point of sale; it was
-      lost post-sale through refunds. This points to a fulfilment or
-      product quality issue specific to that region, not a demand problem."
+**Insight 2: A simple flow works without training** All 3 staff completed search → add payment → show receipt on their own.
 
-  WHAT TO AVOID:
-  ❌ "Region A had lower revenue than other regions in Q4."
-     (That's an observation. It describes what happened.
-      An insight says what it means and where to look next.)
+**Insight 3: The receipt solves the real argument** One tester said: "This will stop the argument at the gate."
 
-  Aim for 3–6 insights. Quality over quantity.
--->
-
-**Insight 1: [Short descriptive headline]**
-[What you found + what it suggests. One short paragraph.]
-
-**Insight 2: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 3: [Short descriptive headline]**
-[What you found + what it suggests.]
-
-**Insight 4 (if applicable): [Short descriptive headline]**
-[What you found + what it suggests.]
 
 ---
 
 ## 10. Recommendations
 
-<!--
-  Action-oriented. Addressed to a real audience.
-  Tied explicitly to the insight that supports each one.
-
-  WHAT GOOD LOOKS LIKE:
-  Priority: High
-  Recommendation: "Conduct a fulfilment audit for home goods deliveries
-                   in Region A - specifically investigating whether returns
-                   correlate with a particular warehouse, carrier, or SKU batch."
-  Based On: Insight 1 - return rate anomaly in Region A
-  Owner: Operations / Supply Chain team
-
-  WHAT TO AVOID:
-  ❌ "Improve the return rate."
-     (Not actionable. Doesn't say who, how, or where to start.)
-  ❌ "Further analysis is needed."
-     (This is a placeholder, not a recommendation.)
--->
-
 | Priority | Recommendation | Based On | Suggested Owner |
 |----------|---------------|----------|-----------------|
-| High | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Medium | [Specific, actionable step] | [Insight it comes from] | [Who should act] |
-| Low | [Exploratory or longer-term suggestion] | [Insight it comes from] | [Who should act] |
+| High | Add Fee Summary by Class (Expected, Collected, Outstanding) | Owners need a quick view of money owed | Developer / me
+| Medium | Test with more schools beyond the first 3 staff| Small test sample|Me
+| Low | Explore a backup option | Data is lost if the phone is lost| Me
 
 ---
 
 ## 11. Assumptions & Limitations
 
-<!--
-  WHAT GOOD LOOKS LIKE:
-  Assumption: "Transaction records were assumed to be complete for all five regions.
-               No validation was performed against source system record counts."
-  Limitation: "The analysis cannot distinguish between returns initiated by
-               the customer vs. returns initiated by the business (e.g., recalls).
-               If business-initiated returns are concentrated in Region A, the
-               return rate finding may reflect a policy decision, not a quality issue."
-
-  WHAT TO AVOID:
-  ❌ Leaving this section blank or writing "None known."
-     Every project has limitations. Documenting them is a sign of
-     analytical maturity - not a confession of failure.
--->
-
 ### Assumptions
-- [What did you treat as true without being able to verify?]
-- [What simplifications did you make for scope or feasibility?]
-- [What domain rules or definitions did you accept as given?]
+- Staff use an Android phone with WhatsApp installed.
+- School owners enter fees and payments accurately.
+- Parents respond to polite WhatsApp reminders
 
-### Limitations
-- [What gaps exist in the data?]
-- [What analysis was out of scope but could affect interpretation?]
-- [What would a more rigorous version of this project include?]
-- [Are there known biases in the data source or collection method?]
-
-> *The goal here is pre-emptive Q&A. What would a thoughtful skeptic push back on? Document the answer here, before they ask.*
+### Limitation: what FeeView should NOT be trusted with
+- Official accounting, tax filing or audit-ready reports. It is not a replacement for an accountant.
+- Long-term backup. Data lives on one phone; if the phone is lost, the data is lost.
+- Handling money. It has no bank integration and does not process transfers.
+- User roles. There is no login or separation between staff.
+- Sensitive documents. Do not store parent ID documents in it.
+- Automatic reminders. Reminders are never sent automatically; a person must tap and send.
+- Small test sample. Only 3 staff tested it, so results are early evidence, not proof.
+Prototype only: use sample data, not real pupils' details, in anything shared publicly.
 
 ---
 
 ## 12. Future Enhancements
 
-<!--
-  WHAT GOOD LOOKS LIKE:
-  ✅ "Automate the monthly data pull from the POS export folder using
-      a scheduled Python script, replacing the current manual process."
-  ✅ "Expand the return rate analysis to include carrier-level data,
-      which was unavailable in this dataset but exists in the logistics system."
-
-  WHAT TO AVOID:
-  ❌ "Add a machine learning model."
-     (Vague, and disconnected from the actual findings of this project.)
-  ❌ Listing aspirational features that don't follow logically from the work.
--->
-
-- [ ] [Enhancement 1 - specific and traceable to a real gap in this project]
-- [ ] [Enhancement 2]
-- [ ] [Enhancement 3]
-- [ ] [Enhancement 4]
+- [ ] Fee Summary by Class: Expected, Collected, Outstanding for each class
+- [ ] Backup and restore, so data survives a lost phone
+- [ ] Wider testing with more schools and more staff
 
 ---
 
 ## 13. Deliverables
-
 | Deliverable | Description | Location |
 |-------------|-------------|----------|
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
-| [Name] | [What it contains] | [`/path/to/file`] |
-
+| Freeview prototype | Offline one-page fee tracker with deadline reminders|[Add prototype link]|
+| Capstone write-up | Problem, prototype, what it can't do, module reflection| /docs/Meta AI Development Capstone Project.docx |
+| Screenshots | 375px mobile views of the app | /visuals/ |
 ---
 
 ## 14. Author
