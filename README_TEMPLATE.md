@@ -257,14 +257,14 @@ Prototype only: use sample data, not real pupils' details, in anything shared pu
 
 ## 14. Author
 
-**[Your Name]**
-[Your role or title - current or target]
+**Vivian Okwara**
+Data Analyst | Lagos, Nigeria 
 
-- 🔗 [LinkedIn URL]
-- 💼 [Portfolio or GitHub profile URL]
-- 📧 [Email - optional]
+- 🔗 LinkedIn: https://linkedin.com/in/okwara-vivian
+- 💼 https://Vivian-Portfolio. github.io
+- 📧 Email: okwaravivian26@gmail.com
 
 ---
 
-*Last updated: [Month YYYY]*
-*If this template helped you, consider starring the repository.*
+*Last updated: October 2026*
+
